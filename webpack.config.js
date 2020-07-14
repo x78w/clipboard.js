@@ -1,8 +1,6 @@
 const pkg = require('./package.json');
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const production = process.env.NODE_ENV === 'production' || false;
 
@@ -24,27 +22,20 @@ module.exports = {
             {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
         ]
     },
-    optimization: {
-        minimizer: [
-            new UglifyJSPlugin({
-                parallel: require('os').cpus().length,
-                uglifyOptions: {
-                    ie8: false,
-                    keep_fnames: false,
-                    output: {
-                        beautify: false,
-                        comments: false
-                    }
-                }
-            })
-        ]
-    },
     plugins: production ? [
-            new webpack.BannerPlugin({ banner }),
-            new BundleAnalyzerPlugin({
-                analyzerMode: process.env.ANALYZE_BUILD ? 'server' : 'disabled'
-            })
+            new webpack.optimize.UglifyJsPlugin({
+                beautify: false,
+                mangle: {
+                    screw_ie8: true,
+                    keep_fnames: true
+                },
+                compress: {
+                    screw_ie8: true
+                },
+                comments: false
+            }),
+            new webpack.BannerPlugin({banner})
         ] : [
-            new webpack.BannerPlugin({ banner })
+            new webpack.BannerPlugin({banner})
         ]
 };

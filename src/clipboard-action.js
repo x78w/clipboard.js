@@ -49,8 +49,7 @@ class ClipboardAction {
 
         this.removeFake();
 
-        this.fakeHandlerCallback = () => this.removeFake();
-        this.fakeHandler = document.body.addEventListener('click', this.fakeHandlerCallback) || true;
+        this.fakeHandler = document.body.addEventListener('click', () => this.removeFake()) || true;
 
         this.fakeElem = document.createElement('textarea');
         // Prevent zooming on iOS
@@ -79,9 +78,8 @@ class ClipboardAction {
      */
     removeFake() {
         if (this.fakeHandler) {
-            document.body.removeEventListener('click', this.fakeHandlerCallback);
+            document.body.removeEventListener('click');
             this.fakeHandler = null;
-            this.fakeHandlerCallback = null;
         }
 
         if (this.fakeElem) {

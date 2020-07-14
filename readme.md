@@ -145,7 +145,8 @@ new Clipboard('.btn', {
 });
 ```
 
-For use in Bootstrap Modals or with any other library that changes the focus you'll want to set the focused element as the `container` value.
+For use in bootstrap modals or with any other library that changes the focus you'll want to set the focused element as the `container` value.
+See [Issue #155 (comment)](https://github.com/zenorocha/clipboard.js/issues/155#issuecomment-273124130)
 
 ```js
 new Clipboard('.btn', {

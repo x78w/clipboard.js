@@ -18,11 +18,12 @@ class ClipboardAction {
      * @param {Object} options
      */
     resolveOptions(options = {}) {
-        this.action  = options.action;
-        this.emitter = options.emitter;
-        this.target  = options.target;
-        this.text    = options.text;
-        this.trigger = options.trigger;
+        this.action    = options.action;
+        this.container = options.container;
+        this.emitter   = options.emitter;
+        this.target    = options.target;
+        this.text      = options.text;
+        this.trigger   = options.trigger;
 
         this.selectedText = '';
     }
@@ -49,7 +50,8 @@ class ClipboardAction {
 
         this.removeFake();
 
-        this.fakeHandler = document.body.addEventListener('click', () => this.removeFake());
+        this.fakeHandlerCallback = () => this.removeFake();
+        this.fakeHandler = this.container.addEventListener('click', this.fakeHandlerCallback) || true;
 
         this.fakeElem = document.createElement('textarea');
         // Prevent zooming on iOS
@@ -59,14 +61,16 @@ class ClipboardAction {
         this.fakeElem.style.padding = '0';
         this.fakeElem.style.margin = '0';
         // Move element out of screen horizontally
-        this.fakeElem.style.position = 'fixed';
+        this.fakeElem.style.position = 'absolute';
         this.fakeElem.style[ isRTL ? 'right' : 'left' ] = '-9999px';
         // Move element to the same position vertically
-        this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
+        let yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        this.fakeElem.style.top = `${yPosition}px`;
+
         this.fakeElem.setAttribute('readonly', '');
         this.fakeElem.value = this.text;
 
-        document.body.appendChild(this.fakeElem);
+        this.container.appendChild(this.fakeElem);
 
         this.selectedText = select(this.fakeElem);
         this.copyText();
@@ -78,12 +82,13 @@ class ClipboardAction {
      */
     removeFake() {
         if (this.fakeHandler) {
-            document.body.removeEventListener('click');
+            this.container.removeEventListener('click', this.fakeHandlerCallback);
             this.fakeHandler = null;
+            this.fakeHandlerCallback = null;
         }
 
         if (this.fakeElem) {
-            document.body.removeChild(this.fakeElem);
+            this.container.removeChild(this.fakeElem);
             this.fakeElem = null;
         }
     }
@@ -117,31 +122,22 @@ class ClipboardAction {
      * @param {Boolean} succeeded
      */
     handleResult(succeeded) {
-        if (succeeded) {
-            this.emitter.emit('success', {
-                action: this.action,
-                text: this.selectedText,
-                trigger: this.trigger,
-                clearSelection: this.clearSelection.bind(this)
-            });
-        }
-        else {
-            this.emitter.emit('error', {
-                action: this.action,
-                trigger: this.trigger,
-                clearSelection: this.clearSelection.bind(this)
-            });
-        }
+        this.emitter.emit(succeeded ? 'success' : 'error', {
+            action: this.action,
+            text: this.selectedText,
+            trigger: this.trigger,
+            clearSelection: this.clearSelection.bind(this)
+        });
     }
 
     /**
-     * Removes current selection and focus from `target` element.
+     * Moves focus away from `target` and back to the trigger, removes current selection.
      */
     clearSelection() {
-        if (this.target) {
-            this.target.blur();
+        if (this.trigger) {
+            this.trigger.focus();
         }
-
+        document.activeElement.blur();
         window.getSelection().removeAllRanges();
     }
 
@@ -205,4 +201,4 @@ class ClipboardAction {
     }
 }
 
-module.exports = ClipboardAction;
+export default ClipboardAction;

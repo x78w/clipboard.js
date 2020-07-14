@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>constructor-selector</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
     <!-- 1. Define some markup -->
@@ -15,7 +16,7 @@
 
     <!-- 3. Instantiate clipboard by passing a string selector -->
     <script>
-    var clipboard = new Clipboard('.btn');
+    var clipboard = new ClipboardJS('.btn');
 
     clipboard.on('success', function(e) {
         console.log(e);

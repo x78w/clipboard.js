@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v2.0.4
+ * clipboard.js v2.0.3
  * https://zenorocha.github.io/clipboard.js
  * 
  * Licensed MIT © Zeno Rocha
@@ -13,7 +13,7 @@
 		exports["ClipboardJS"] = factory();
 	else
 		root["ClipboardJS"] = factory();
-})(this, function() {
+})(window, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};

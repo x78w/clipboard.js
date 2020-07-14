@@ -119,12 +119,21 @@ class ClipboardAction {
      * @param {Boolean} succeeded
      */
     handleResult(succeeded) {
-        this.emitter.emit(succeeded ? 'success' : 'error', {
-            action: this.action,
-            text: this.selectedText,
-            trigger: this.trigger,
-            clearSelection: this.clearSelection.bind(this)
-        });
+        if (succeeded) {
+            this.emitter.emit('success', {
+                action: this.action,
+                text: this.selectedText,
+                trigger: this.trigger,
+                clearSelection: this.clearSelection.bind(this)
+            });
+        }
+        else {
+            this.emitter.emit('error', {
+                action: this.action,
+                trigger: this.trigger,
+                clearSelection: this.clearSelection.bind(this)
+            });
+        }
     }
 
     /**

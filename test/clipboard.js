@@ -26,7 +26,7 @@ describe('Clipboard', () => {
 
     describe('#resolveOptions', () => {
         before(() => {
-            global.fn = () => {};
+            global.fn = function() {};
         });
 
         it('should set action as a function', () => {
@@ -79,8 +79,8 @@ describe('Clipboard', () => {
 
         it('should throw an exception when target is invalid', done => {
             try {
-                const clipboard = new Clipboard('.btn', {
-                    target() {
+                var clipboard = new Clipboard('.btn', {
+                    target: function() {
                         return null;
                     }
                 });

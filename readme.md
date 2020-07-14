@@ -21,7 +21,13 @@ You can get it on npm.
 npm install clipboard --save
 ```
 
-Or if you're not into package management, just [download a ZIP](https://github.com/zenorocha/clipboard.js/archive/master.zip) file.
+Or bower, too.
+
+```
+bower install clipboard --save
+```
+
+If you're not into package management, just [download a ZIP](https://github.com/zenorocha/clipboard.js/archive/master.zip) file.
 
 ## Setup
 

@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v1.7.0
+ * clipboard.js v1.6.1
  * https://zenorocha.github.io/clipboard.js
  *
  * Licensed MIT © Zeno Rocha
@@ -10,7 +10,7 @@ var DOCUMENT_NODE_TYPE = 9;
 /**
  * A polyfill for Element.matches()
  */
-if (typeof Element !== 'undefined' && !Element.prototype.matches) {
+if (Element && !Element.prototype.matches) {
     var proto = Element.prototype;
 
     proto.matches = proto.matchesSelector ||
@@ -29,10 +29,7 @@ if (typeof Element !== 'undefined' && !Element.prototype.matches) {
  */
 function closest (element, selector) {
     while (element && element.nodeType !== DOCUMENT_NODE_TYPE) {
-        if (typeof element.matches === 'function' &&
-            element.matches(selector)) {
-          return element;
-        }
+        if (element.matches(selector)) return element;
         element = element.parentNode;
     }
 }

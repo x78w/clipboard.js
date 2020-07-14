@@ -18,12 +18,11 @@ class ClipboardAction {
      * @param {Object} options
      */
     resolveOptions(options = {}) {
-        this.action    = options.action;
-        this.container = options.container;
-        this.emitter   = options.emitter;
-        this.target    = options.target;
-        this.text      = options.text;
-        this.trigger   = options.trigger;
+        this.action  = options.action;
+        this.emitter = options.emitter;
+        this.target  = options.target;
+        this.text    = options.text;
+        this.trigger = options.trigger;
 
         this.selectedText = '';
     }
@@ -51,7 +50,7 @@ class ClipboardAction {
         this.removeFake();
 
         this.fakeHandlerCallback = () => this.removeFake();
-        this.fakeHandler = this.container.addEventListener('click', this.fakeHandlerCallback) || true;
+        this.fakeHandler = document.body.addEventListener('click', this.fakeHandlerCallback) || true;
 
         this.fakeElem = document.createElement('textarea');
         // Prevent zooming on iOS
@@ -70,7 +69,7 @@ class ClipboardAction {
         this.fakeElem.setAttribute('readonly', '');
         this.fakeElem.value = this.text;
 
-        this.container.appendChild(this.fakeElem);
+        document.body.appendChild(this.fakeElem);
 
         this.selectedText = select(this.fakeElem);
         this.copyText();
@@ -82,13 +81,13 @@ class ClipboardAction {
      */
     removeFake() {
         if (this.fakeHandler) {
-            this.container.removeEventListener('click', this.fakeHandlerCallback);
+            document.body.removeEventListener('click', this.fakeHandlerCallback);
             this.fakeHandler = null;
             this.fakeHandlerCallback = null;
         }
 
         if (this.fakeElem) {
-            this.container.removeChild(this.fakeElem);
+            document.body.removeChild(this.fakeElem);
             this.fakeElem = null;
         }
     }

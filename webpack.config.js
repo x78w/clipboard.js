@@ -6,7 +6,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const production = process.env.NODE_ENV === 'production' || false;
 
 const banner = `clipboard.js v${pkg.version}
-https://clipboardjs.com/
+https://zenorocha.github.io/clipboard.js
 
 Licensed MIT © Zeno Rocha`;
 

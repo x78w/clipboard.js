@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "oomphinc/composer-installers-extender": "*"
+    "robloach/component-installer": "*"
   },
   "extra": {
     "component": {

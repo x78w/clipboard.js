@@ -17,7 +17,7 @@
     <!-- 3. Instantiate clipboard by passing a list of HTML elements -->
     <script>
     var btns = document.querySelectorAll('button');
-    var clipboard = new ClipboardJS(btns);
+    var clipboard = new Clipboard(btns);
 
     clipboard.on('success', function(e) {
         console.log(e);

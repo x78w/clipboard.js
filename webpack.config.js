@@ -32,7 +32,7 @@ module.exports = {
                     keep_fnames: false,
                     output: {
                         beautify: false,
-                        comments: (node, {value, type}) => type == 'comment2' && value.startsWith('!')
+                        comments: false
                     }
                 }
             })

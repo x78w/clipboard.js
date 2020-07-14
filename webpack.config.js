@@ -2,6 +2,7 @@ const pkg = require('./package.json');
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const production = process.env.NODE_ENV === 'production' || false;
 
@@ -38,5 +39,12 @@ module.exports = {
             })
         ]
     },
-    plugins: [new webpack.BannerPlugin({ banner })]
+    plugins: production ? [
+            new webpack.BannerPlugin({ banner }),
+            new BundleAnalyzerPlugin({
+                analyzerMode: process.env.ANALYZE_BUILD ? 'server' : 'disabled'
+            })
+        ] : [
+            new webpack.BannerPlugin({ banner })
+        ]
 };

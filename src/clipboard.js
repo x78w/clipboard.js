@@ -24,10 +24,9 @@ class Clipboard extends Emitter {
      * @param {Object} options
      */
     resolveOptions(options = {}) {
-        this.action    = (typeof options.action    === 'function') ? options.action    : this.defaultAction;
-        this.target    = (typeof options.target    === 'function') ? options.target    : this.defaultTarget;
-        this.text      = (typeof options.text      === 'function') ? options.text      : this.defaultText;
-        this.container = (typeof options.container === 'object')   ? options.container : document.body;
+        this.action = (typeof options.action === 'function') ? options.action : this.defaultAction;
+        this.target = (typeof options.target === 'function') ? options.target : this.defaultTarget;
+        this.text   = (typeof options.text   === 'function') ? options.text   : this.defaultText;
     }
 
     /**
@@ -50,12 +49,11 @@ class Clipboard extends Emitter {
         }
 
         this.clipboardAction = new ClipboardAction({
-            action    : this.action(trigger),
-            target    : this.target(trigger),
-            text      : this.text(trigger),
-            container : this.container,
-            trigger   : trigger,
-            emitter   : this
+            action  : this.action(trigger),
+            target  : this.target(trigger),
+            text    : this.text(trigger),
+            trigger : trigger,
+            emitter : this
         });
     }
 
@@ -77,22 +75,6 @@ class Clipboard extends Emitter {
         if (selector) {
             return document.querySelector(selector);
         }
-    }
-
-    /**
-     * Returns the support of the given action, or all actions if no action is
-     * given.
-     * @param {String} [action]
-     */
-    static isSupported(action = ['copy', 'cut']) {
-        const actions = (typeof action === 'string') ? [action] : action;
-        let support = !!document.queryCommandSupported;
-
-        actions.forEach((action) => {
-            support = support && !!document.queryCommandSupported(action);
-        });
-
-        return support;
     }
 
     /**
@@ -132,4 +114,4 @@ function getAttributeValue(suffix, element) {
     return element.getAttribute(attribute);
 }
 
-export default Clipboard;
+module.exports = Clipboard;

@@ -1,13 +1,4 @@
 {
-  "presets": [
-    [
-      "env",
-      {
-        "targets": {
-          "uglify": true
-        },
-        "modules": false
-      }
-    ]
-  ]
+  "presets": ["es2015-loose"],
+  "plugins": ["transform-es2015-modules-umd"]
 }

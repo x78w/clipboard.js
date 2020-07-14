@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>constructor-nodelist</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
     <!-- 1. Define some markup -->
@@ -17,7 +16,7 @@
     <!-- 3. Instantiate clipboard by passing a list of HTML elements -->
     <script>
     var btns = document.querySelectorAll('button');
-    var clipboard = new ClipboardJS(btns);
+    var clipboard = new Clipboard(btns);
 
     clipboard.on('success', function(e) {
         console.log(e);
